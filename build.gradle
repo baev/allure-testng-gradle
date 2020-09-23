@@ -14,15 +14,10 @@ compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
 
 allure {
-    autoconfigure = true
     aspectjweaver = true
     version = allureVersion
 
     clean = true
-
-    useTestNG {
-        version = allureVersion
-    }
 }
 
 test {
@@ -38,8 +33,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.qameta.allure:allure-java-commons:$allureVersion")
+    implementation("io.qameta.allure:allure-java-commons:$allureVersion")
+    implementation("org.testng:testng:$testngVersion")
+    implementation("commons-io:commons-io:2.8.0")
 
-    testImplementation("org.testng:testng:$testngVersion")
     testImplementation("org.slf4j:slf4j-simple:1.7.30")
 }
