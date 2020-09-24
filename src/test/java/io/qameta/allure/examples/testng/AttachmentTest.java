@@ -1,5 +1,6 @@
 package io.qameta.allure.examples.testng;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
@@ -10,6 +11,7 @@ public class AttachmentTest {
     public void testAttachments() {
         attachment();
         doSomething();
+        Allure.attachment("From Allure", "world");
         throw new RuntimeException("asd");
     }
 

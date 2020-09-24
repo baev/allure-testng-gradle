@@ -35,6 +35,8 @@ repositories {
 dependencies {
     implementation("io.qameta.allure:allure-java-commons:$allureVersion")
     implementation("org.testng:testng:$testngVersion")
+
+    implementation("org.apache.commons:commons-lang3:3.11")
     implementation("commons-io:commons-io:2.8.0")
 
     testImplementation("org.slf4j:slf4j-simple:1.7.30")

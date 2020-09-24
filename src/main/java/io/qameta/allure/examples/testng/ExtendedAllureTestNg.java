@@ -152,11 +152,6 @@ public class ExtendedAllureTestNg implements
         return lifecycle;
     }
 
-    static {
-        AttachmentsAspects.setLifecycle(ExtendedAllureLifecycle.getLifecycle());
-        StepsAspects.setLifecycle(ExtendedAllureLifecycle.getLifecycle());
-    }
-
     @Override
     public void onStart(final ISuite suite) {
         final TestResultContainer result = new TestResultContainer()
