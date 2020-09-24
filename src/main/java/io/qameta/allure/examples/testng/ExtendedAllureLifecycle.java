@@ -3,9 +3,8 @@ package io.qameta.allure.examples.testng;
 import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.AllureResultsWriter;
 import io.qameta.allure.model.Attachment;
+import io.qameta.allure.model.ExecutableItem;
 import io.qameta.allure.model.Status;
-import io.qameta.allure.model.StepResult;
-import io.qameta.allure.model.TestResult;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
@@ -70,31 +69,28 @@ public class ExtendedAllureLifecycle extends AllureLifecycle {
         }
     }
 
-    private void writeAttachments(final TestResult result) {
+    private void writeAttachments(final ExecutableItem result) {
         if (Objects.nonNull(result.getAttachments())) {
-            for (final Attachment attachment: result.getAttachments()) {
-                final String source = attachment.getSource();
-                final Path file = attachments.get(source);
-                try (final InputStream stream = new FileInputStream(file.toFile())) {
-                    super.writeAttachment(source, stream);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                };
-            }
+            result.getAttachments().forEach(this::writeAttachmentFromFile);
+        }
+        if (Objects.nonNull(result.getSteps())) {
+            result.getSteps().forEach(this::writeAttachments);
         }
     }
 
-    private void cleanAttachments(final TestResult result) {
+    private void writeAttachmentFromFile(final Attachment attachment) {
+        final Path file = attachments.get(attachment.getSource());
+        try (final InputStream stream = new FileInputStream(file.toFile())) {
+            super.writeAttachment(attachment.getSource(), stream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
+    }
+
+    private void cleanAttachments(final ExecutableItem result) {
         Optional.ofNullable(result.getAttachments()).ifPresent(List::clear);
         if (Objects.nonNull(result.getSteps())) {
             result.getSteps().forEach(this::cleanAttachments);
-        }
-    }
-
-    private void cleanAttachments(final StepResult step) {
-        Optional.ofNullable(step.getAttachments()).ifPresent(List::clear);
-        if (Objects.nonNull(step.getSteps())) {
-            step.getSteps().forEach(this::cleanAttachments);
         }
     }
 
