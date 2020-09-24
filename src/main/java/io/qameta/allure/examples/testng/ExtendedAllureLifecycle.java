@@ -34,7 +34,7 @@ public class ExtendedAllureLifecycle extends AllureLifecycle {
      */
     public void writeTestCase(final String uuid) {
         updateTestCase(uuid, (testResult -> {
-            if (testResult.getStatus().equals(Status.PASSED)) {
+            if (Objects.nonNull(testResult.getStatus()) && testResult.getStatus().equals(Status.PASSED)) {
                 cleanAttachments(testResult);
             } else {
                 writeAttachments(testResult);

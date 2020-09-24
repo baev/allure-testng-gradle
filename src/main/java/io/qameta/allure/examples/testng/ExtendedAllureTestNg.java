@@ -15,7 +15,6 @@
  */
 package io.qameta.allure.examples.testng;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.Flaky;
 import io.qameta.allure.Muted;
